@@ -1,8 +1,9 @@
-import solutions
 from typing import List
 
+import solutions
 
-def char_values(letter_sequence: str) -> int:
+
+def char_values(letter_sequence: str) -> List[int]:
     return [(value - 96) % 58 for value in letter_sequence.encode()]
 
 
@@ -12,7 +13,7 @@ def test_char_values():
 
 def common_between_halves(encoded_list: List[int]) -> int:
     half_length = len(encoded_list) // 2
-    return set(encoded_list[0: half_length]).intersection(encoded_list[half_length:]).pop()
+    return set(encoded_list[0:half_length]).intersection(encoded_list[half_length:]).pop()
 
 
 def test_common_between_halves():
@@ -39,7 +40,9 @@ def process_badges(file_values: List[List[int]]) -> int:
 if __name__ == "__main__":
     test_char_values()
     test_common_between_halves()
-    file_values = [char_values(item) for item in solutions.read_input("03").split("\n") if len(item) > 0]
+    file_values: List[List[int]] = [
+        char_values(item) for item in solutions.read_input("03").split("\n") if len(item) > 0
+    ]
     with open("outputs/output03.txt", "w") as file:
         file.write(str(process_common(file_values)))
         file.write("\n")
