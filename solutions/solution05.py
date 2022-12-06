@@ -87,8 +87,8 @@ assert parse_multi_data(example) == (
 def multi_move_boxes(start_diagram: Dict[int, List], moves: List[Tuple[int, int, int]]) -> Dict[int, List]:
     box_diagram = start_diagram
     for move in moves:
-        box_diagram[move[1]].extend(box_diagram[move[0]][-move[2]:])
-        del box_diagram[move[0]][-move[2]:]
+        box_diagram[move[1]].extend(box_diagram[move[0]][-move[2]:])  # fmt: skip
+        del box_diagram[move[0]][-move[2]:]  # fmt: skip
     return box_diagram
 
 
