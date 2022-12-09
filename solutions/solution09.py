@@ -1,4 +1,4 @@
-from typing import List, NamedTuple, Tuple
+from typing import List, Tuple
 
 import solutions
 
@@ -20,11 +20,6 @@ R 17
 D 10
 L 25
 U 20"""
-
-
-class HeadTailState(NamedTuple):
-    tail: Tuple[int, int]
-    relative_head: Tuple[int, int]
 
 
 def move_parse(moves: str) -> List[str]:
@@ -54,18 +49,6 @@ def construct_move(relative_error: int):
         return relative_error // abs(relative_error)
 
 
-def apply_move(state: HeadTailState, move: str) -> HeadTailState:
-    intermediate_head = translate_to_coord(state.relative_head, move)
-    if {-1, 0, 1}.issuperset(intermediate_head):
-        return HeadTailState(state.tail, intermediate_head)
-    else:
-        t_horiz_move = construct_move(intermediate_head[0])
-        t_vert_move = construct_move(intermediate_head[1])
-        new_t = (state.tail[0] + t_horiz_move, state.tail[1] + t_vert_move)
-        new_h = (intermediate_head[0] - t_horiz_move, intermediate_head[1] - t_vert_move)
-        return HeadTailState(new_t, new_h)
-
-
 def coord_follow(tail_coord: Tuple[int, int], head_coord: Tuple[int, int]) -> Tuple[int, int]:
     intermediate_head = (head_coord[0] - tail_coord[0], head_coord[1] - tail_coord[1])
     if {-1, 0, 1}.issuperset(intermediate_head):
@@ -74,18 +57,6 @@ def coord_follow(tail_coord: Tuple[int, int], head_coord: Tuple[int, int]) -> Tu
         t_horiz_move = construct_move(intermediate_head[0])
         t_vert_move = construct_move(intermediate_head[1])
         return (tail_coord[0] + t_horiz_move, tail_coord[1] + t_vert_move)
-
-
-def run_moveset(moves: str) -> int:
-    position = HeadTailState((0, 0), (0, 0))
-    all_positions = {position.tail}
-    for move in move_parse(moves):
-        position = apply_move(position, move)
-        all_positions.add(position.tail)
-    return len(all_positions)
-
-
-assert run_moveset(example) == 13
 
 
 def run_long_moveset(moves: str, rope_length: int) -> int:
@@ -99,11 +70,12 @@ def run_long_moveset(moves: str, rope_length: int) -> int:
     return len(tail_trail)
 
 
-assert run_long_moveset(long_example, 10)
+assert run_long_moveset(example, 2) == 13
+assert run_long_moveset(long_example, 10) == 36
 
 
 with open("outputs/output09.txt", "w") as file:
     input = solutions.read_input("09")
-    file.write(str(run_moveset(input)))
+    file.write(str(run_long_moveset(input, 2)))
     file.write("\n")
     file.write(str(run_long_moveset(input, 10)))
