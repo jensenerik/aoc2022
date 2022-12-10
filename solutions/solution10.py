@@ -179,7 +179,7 @@ def add_history(commands: List[int]) -> List[int]:
 
 
 def signal(commands: List[int], cycle: int) -> int:
-    return cycle * (sum(add_history(commands)[: cycle]))  # fmt: skip
+    return cycle * (sum(add_history(commands)[:cycle]))
 
 
 def signal_sum(commands: str) -> int:
@@ -206,7 +206,7 @@ def crt_display(commands: str) -> str:
     data = crt_data(register_history(add_history(parse_commands(commands))))
     output = ""
     for left_position in range(0, len(data), 40):
-        output = output + crt_pixel(data[left_position: left_position + 40]) + "\n"  # fmt: skip
+        output = output + crt_pixel(data[left_position : left_position + 40]) + "\n"
     return output
 
 

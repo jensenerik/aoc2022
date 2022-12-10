@@ -21,7 +21,7 @@ def vertical_views(diagram: str) -> List[Tuple[int, ...]]:
 def find_visible(view: Tuple[int, ...], tracker: int) -> Set[Tuple[int, int]]:
     visible = set()
     for i, height in enumerate(view):
-        if (height > max(view[:i], default=-1)) or (height > max(view[i + 1:], default=-1)):  # fmt: skip
+        if (height > max(view[:i], default=-1)) or (height > max(view[i + 1 :], default=-1)):
             visible.add((i, tracker))
     return visible
 
@@ -46,7 +46,7 @@ def interior_visible(view: Tuple[int, ...], tracker: int) -> Dict[Tuple[int, int
         two_sided_visible = []
         blocking = [(item >= height) for item in view]
         left = list(reversed(blocking[:i]))
-        right = blocking[i + 1:]  # fmt: skip
+        right = blocking[i + 1 :]
         for direction in [left, right]:
             if True in direction:
                 two_sided_visible.append(direction.index(True) + 1)
