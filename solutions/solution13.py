@@ -68,6 +68,7 @@ def compare_pairs(left: List[str], right: List[str]) -> Optional[bool]:
                 return bool(right[1:])
         else:
             return int(left_current) < int(right_current)
+    return None
 
 
 example_answers = [True, True, False, True, False, True, False, False]
