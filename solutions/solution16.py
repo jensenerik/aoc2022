@@ -138,9 +138,7 @@ def iterate_steps(instructions: str, candidates: int, flip_mode: bool = False) -
                 next_list.extend(new_steps)
             else:
                 endings.append(step)
-        working_list = sorted(next_list, key=lambda valve: valve.total_flow // valve.total_time, reverse=True)[
-            0 : candidates**2
-        ]
+        working_list = sorted(next_list, key=lambda valve: valve.total_flow, reverse=True)[0 : candidates**2]
         next_list = []
     return max(endings, key=lambda x: x.total_flow).total_flow
 
